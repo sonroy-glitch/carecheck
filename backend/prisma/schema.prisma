@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User{
+  id    String @id @default(cuid())
+  email String @unique
+  password String 
+  language String 
+  reminder String?
+  overview String? 
+  createdAt DateTime @default(now())
+  checks Check[]
+  doctor Doctor[]
+  report Report[]
+}
+
+model Check{
+  id String @id @default(cuid())
+  user_id  String
+  type String
+  transcript String
+  unchecked Boolean @default(false)
+  createdAt DateTime @default(now())
+  user     User     @relation(fields: [user_id], references: [id])
+}
+
+model Report{
+  id  String @id @default(cuid())
+  user_id String
+  summary String
+  lump String
+  pain String
+  different String
+  hasConcern Boolean @default(false)
+  createdAt DateTime @default(now())
+  user     User     @relation(fields: [user_id], references: [id])
+}
+
+model Doctor{
+  id String @id @default(cuid())
+  user_id String
+  doctorAdvice String?
+  doctorAdviceAnalyzed String?
+  createdAt DateTime @default(now())
+  user     User     @relation(fields: [user_id], references: [id])
+}
+
