@@ -2,6 +2,7 @@
 
 import { useApp } from "../app-context"
 import { useNavigate } from "react-router-dom"
+import { API_BASE_URL } from "@/config"
 import { Volume2, Check, ThumbsDown, ThumbsUp, Mic, Square, RotateCcw, Loader2, Pause } from "lucide-react"
 import { useState, useRef, useEffect } from "react"
 
@@ -142,7 +143,7 @@ export function QuestionScreen({ questionNumber, title, subtitle }: QuestionScre
     formData.append("voice", blob, `question-${questionNumber}.wav`)
 
     try {
-      const response = await fetch("http://localhost:3000/transcribe", {
+      const response = await fetch(`${API_BASE_URL}/transcribe`, {
         method: "POST",
         headers: {
           "userId": userId || "guest-user",
@@ -176,7 +177,7 @@ export function QuestionScreen({ questionNumber, title, subtitle }: QuestionScre
     setTranscribing(true)
     const textVal = val ? "Yes" : "No"
     try {
-      await fetch("http://localhost:3000/transcribe", {
+      await fetch(`${API_BASE_URL}/transcribe`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -219,7 +220,7 @@ export function QuestionScreen({ questionNumber, title, subtitle }: QuestionScre
       // Q3 finished - call report generation
       setAnalyzing(true)
       try {
-        const response = await fetch("http://localhost:3000/report", {
+        const response = await fetch(`${API_BASE_URL}/report`, {
           headers: {
             "userId": userId || "guest-user"
           }

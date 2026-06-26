@@ -1,6 +1,7 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react"
+import { API_BASE_URL } from "@/config"
 
 export interface CheckRecord {
   id?: string
@@ -93,7 +94,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const fetchHistory = async (id: string) => {
     try {
-      const res = await fetch("http://localhost:3000/history", {
+      const res = await fetch(`${API_BASE_URL}/history`, {
         headers: { "userId": id }
       })
       if (res.ok) {
@@ -116,7 +117,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const saveReminder = async (day: number, time: string, voice: boolean) => {
     if (!userId) return false
     try {
-      const res = await fetch("http://localhost:3000/reminder", {
+      const res = await fetch(`${API_BASE_URL}/reminder`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

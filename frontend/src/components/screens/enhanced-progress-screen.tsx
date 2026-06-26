@@ -2,6 +2,7 @@
 
 import { useApp } from "../app-context"
 import { useNavigate } from "react-router-dom"
+import { API_BASE_URL } from "@/config"
 import { MapPin, Volume2, ArrowLeft, ChevronRight, CheckCircle, AlertCircle, Flame, Calendar, TrendingUp } from "lucide-react"
 import { useState } from "react"
 
@@ -31,7 +32,7 @@ export function ProgressScreen() {
     if (playingId === id) return
     setPlayingId(id)
     try {
-      const response = await fetch("http://localhost:3000/tts", {
+      const response = await fetch(`${API_BASE_URL}/tts`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text, lang: language })

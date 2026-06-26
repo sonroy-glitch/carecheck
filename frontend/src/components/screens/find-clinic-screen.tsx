@@ -1,6 +1,7 @@
 "use client"
 
 import { useNavigate } from "react-router-dom"
+import { API_BASE_URL } from "@/config"
 import { MapPin, Phone, ExternalLink, ArrowLeft, Clock, Users, Star, Loader2 } from "lucide-react"
 import { useState, useEffect } from "react"
 
@@ -39,7 +40,7 @@ export function FindClinicScreen() {
         const { latitude, longitude } = position.coords
         setStatusMessage("Fetching clinics near you...")
         try {
-          const response = await fetch("http://localhost:3000/nearby_clinics", {
+          const response = await fetch(`${API_BASE_URL}/nearby_clinics`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -96,7 +97,7 @@ export function FindClinicScreen() {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/nearby_clinics", {
+      const response = await fetch(`${API_BASE_URL}/nearby_clinics`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ lat, lng })

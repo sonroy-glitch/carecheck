@@ -2,6 +2,7 @@
 
 import { useApp } from "../app-context"
 import { useNavigate } from "react-router-dom"
+import { API_BASE_URL } from "@/config"
 import { AlertCircle, Heart, Volume2, MapPin, ShieldCheck, HelpCircle } from "lucide-react"
 import { useState } from "react"
 
@@ -21,7 +22,7 @@ export function ResultConcernScreen() {
     if (playingSummary) return
     setPlayingSummary(true)
     try {
-      const response = await fetch("http://localhost:3000/tts", {
+      const response = await fetch(`${API_BASE_URL}/tts`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: latestSummary, lang: language })

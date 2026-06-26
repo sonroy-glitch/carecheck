@@ -2,6 +2,7 @@
 
 import { useApp } from "../app-context"
 import { useNavigate } from "react-router-dom"
+import { API_BASE_URL } from "@/config"
 import { Mic, Check, ArrowLeft, Volume2, Trash2, Square, Loader2 } from "lucide-react"
 import { useState, useRef, useEffect } from "react"
 
@@ -72,7 +73,7 @@ export function DoctorFeedbackScreen() {
     formData.append("audio", blob, "doctor-feedback.wav")
 
     try {
-      const response = await fetch("http://localhost:3000/doctors", {
+      const response = await fetch(`${API_BASE_URL}/doctors`, {
         method: "POST",
         headers: {
           "userId": userId || "guest-user"
@@ -98,7 +99,7 @@ export function DoctorFeedbackScreen() {
     if (playingAdvice || !analyzedAdvice) return
     setPlayingAdvice(true)
     try {
-      const response = await fetch("http://localhost:3000/tts", {
+      const response = await fetch(`${API_BASE_URL}/tts`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: analyzedAdvice, lang: language })
